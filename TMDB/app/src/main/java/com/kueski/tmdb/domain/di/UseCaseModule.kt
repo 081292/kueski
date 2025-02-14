@@ -1,6 +1,7 @@
 package com.kueski.tmdb.domain.di
 
 import com.kueski.tmdb.domain.usecases.FetchGenresUseCase
+import com.kueski.tmdb.domain.usecases.FetchMovieDetailsUseCase
 import com.kueski.tmdb.domain.usecases.FetchMoviesUseCase
 import org.koin.dsl.module
 
@@ -12,4 +13,5 @@ import org.koin.dsl.module
 val useCaseModule = module {
     single { FetchGenresUseCase(get()) }
     single { FetchMoviesUseCase(get()) }
+    single { FetchMovieDetailsUseCase(get()) }
 }

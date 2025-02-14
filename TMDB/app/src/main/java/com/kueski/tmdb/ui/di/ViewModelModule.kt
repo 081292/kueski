@@ -1,5 +1,6 @@
 package com.kueski.tmdb.ui.di
 
+import com.kueski.tmdb.ui.viewmodel.MovieDetailsViewModel
 import com.kueski.tmdb.ui.viewmodel.MovieViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -11,4 +12,6 @@ import org.koin.dsl.module
  */
 val viewModelModule = module {
     viewModel { MovieViewModel(get(), get()) }
+    viewModel { MovieDetailsViewModel(get()) }
+
 }
