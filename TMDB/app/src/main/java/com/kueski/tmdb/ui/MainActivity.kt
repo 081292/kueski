@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kueski.tmdb.R
+import com.kueski.tmdb.ui.screens.MoviesByGenreScreen
 import com.kueski.tmdb.ui.theme.TMDBTheme
 
 /**
@@ -73,6 +74,7 @@ fun HomeScreen() {
                 modifier = Modifier.padding(paddingValues)
             ) {
                 composable("movieList") {
+                    MoviesByGenreScreen(navController)
                 }
                 composable("movieDetail/{movieId}") { backStackEntry ->
                     val movieId = backStackEntry.arguments?.getString("movieId")?.toIntOrNull()
