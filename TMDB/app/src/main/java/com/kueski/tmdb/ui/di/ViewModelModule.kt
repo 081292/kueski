@@ -11,7 +11,7 @@ import org.koin.dsl.module
  * Koin Service Locator for all view models objects
  */
 val viewModelModule = module {
-    viewModel { MovieViewModel(get(), get()) }
+    viewModel { MovieViewModel(get(), get(), get(), get()) }
     viewModel { MovieDetailsViewModel(get()) }
 
 }

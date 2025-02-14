@@ -2,10 +2,13 @@ package com.kueski.tmdb.data
 
 import com.kueski.tmdb.data.local.dao.GenreDao
 import com.kueski.tmdb.data.local.entity.GenreEntity
+import com.kueski.tmdb.common.ApiError
+import com.kueski.tmdb.common.Result
 import com.kueski.tmdb.data.remote.services.GetGenresService
 import com.kueski.tmdb.domain.model.Genre
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 
 /**
  * GenresRepositoryImpl
@@ -18,13 +21,16 @@ class GenreRepository(
 ) {
 
     // Get from remote the Genres
-    suspend fun refreshGenres() {
-        try {
+    suspend fun refreshGenres(): Result<Unit> {
+        return try {
             val genresFromApi = getGenresService.getGenres().results
             genresDao.deleteAllGenres()
             genresDao.insertGenres(genresFromApi.map { it.toGenreEntity() })
+            Result.Success(Unit)
+        } catch (e: IOException) {
+            Result.Error(ApiError.NetworkError)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Result.Error(ApiError.UnknownError)
         }
     }
 

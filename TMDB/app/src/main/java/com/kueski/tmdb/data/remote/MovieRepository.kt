@@ -1,11 +1,14 @@
 package com.kueski.tmdb.data.remote
 
+import com.kueski.tmdb.common.ApiError
 import com.kueski.tmdb.data.local.dao.MovieDao
 import com.kueski.tmdb.data.local.entity.MovieEntity
 import com.kueski.tmdb.data.remote.services.GetPopularMoviesService
 import com.kueski.tmdb.domain.model.Movie
+import com.kueski.tmdb.common.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 
 /**
  * MovieRepository
@@ -18,13 +21,16 @@ class MovieRepository(
 ) {
 
     // Get from remote the Movies
-    suspend fun refreshMovies() {
-        try {
+    suspend fun refreshMovies(): Result<Unit> {
+        return try {
             val moviesFromApi = getPopularMoviesService.getPopularMovies().results
             movieDao.deleteAllMovies()
             movieDao.insertMovies(moviesFromApi.map { it.toMovieEntity() })
-        } catch (e: Exception) {
-            e.printStackTrace()
+            Result.Success(Unit)
+        } catch (e: IOException) {
+            Result.Error(ApiError.NetworkError)
+        }  catch (e: Exception) {
+            Result.Error(ApiError.UnknownError)
         }
     }
 
