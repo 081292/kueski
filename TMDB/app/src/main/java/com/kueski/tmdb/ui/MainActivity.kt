@@ -12,7 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kueski.tmdb.ui.theme.TMDBTheme
+import com.kueski.tmdb.ui.viewmodel.MovieViewModel
+import org.koin.androidx.compose.koinViewModel
 
+/**
+ * MainActivity
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(
+    name: String,
+    modifier: Modifier = Modifier,
+    viewModel: MovieViewModel = koinViewModel<MovieViewModel>()
+) {
     Text(
         text = "Hello $name!",
         modifier = modifier
