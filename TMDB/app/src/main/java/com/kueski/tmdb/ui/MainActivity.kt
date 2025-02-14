@@ -1,4 +1,4 @@
-package com.kueski.tmdb
+package com.kueski.tmdb.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
