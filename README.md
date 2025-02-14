@@ -1,2 +1,2 @@
-# kueski
+# Kueski
 Challenge
