@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.android.composed)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -69,4 +70,23 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Networking
+    api(libs.square.retrofit)
+    api(libs.square.retrofit.logging.interceptor)
+    implementation(libs.square.retrofit.converter.moshi)
+    implementation(libs.com.square.moshi.kotlin)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.runtime.ktx)
+    ksp(libs.androidx.room.runtime.compiler)
+
+    // DI
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    // UI
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
 }
