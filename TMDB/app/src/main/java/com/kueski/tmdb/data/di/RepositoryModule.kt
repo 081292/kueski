@@ -1,6 +1,6 @@
 package com.kueski.tmdb.data.di
 
-import com.kueski.tmdb.data.GenreRepository
+import com.kueski.tmdb.data.remote.GenreRepository
 import com.kueski.tmdb.data.remote.MovieRepository
 import org.koin.dsl.module
 

@@ -1,4 +1,4 @@
-package com.kueski.tmdb.data
+package com.kueski.tmdb.data.remote
 
 import com.kueski.tmdb.data.local.dao.GenreDao
 import com.kueski.tmdb.data.local.entity.GenreEntity

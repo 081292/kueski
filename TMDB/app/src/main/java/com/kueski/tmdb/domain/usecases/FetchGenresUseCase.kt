@@ -1,6 +1,6 @@
 package com.kueski.tmdb.domain.usecases
 
-import com.kueski.tmdb.data.GenreRepository
+import com.kueski.tmdb.data.remote.GenreRepository
 import com.kueski.tmdb.domain.model.Genre
 import kotlinx.coroutines.flow.Flow
 
