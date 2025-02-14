@@ -16,10 +16,17 @@ navigation = "2.8.7"
 room = "2.6.1"
 ksp =  "2.1.0-1.0.29"
 coil = "2.4.0"
+mockito = "4.0.0"
+testing = "2.1.0"
+testingKtx = "1.6.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "testing" }
+kotlinx-coroutines-testing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "testingKtx" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockito" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
