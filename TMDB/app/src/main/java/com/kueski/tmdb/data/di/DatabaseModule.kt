@@ -13,6 +13,9 @@ val databaseModule = module {
         AppDatabase.getDatabase(get())
     }
     single {
-        get<AppDatabase>().genresDao()
+        get<AppDatabase>().genreDao()
+    }
+    single {
+        get<AppDatabase>().movieDao()
     }
 }

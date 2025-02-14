@@ -43,6 +43,7 @@ class GenreRepository(
         )
     }
 
+    // Convert Genre to GenreEntity
     private fun Genre.toGenreEntity(): GenreEntity {
         return GenreEntity(
             id = id,

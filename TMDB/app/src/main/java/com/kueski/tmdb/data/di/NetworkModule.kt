@@ -2,6 +2,7 @@ package com.kueski.tmdb.data.di
 
 import com.kueski.tmdb.data.remote.RetrofitClient
 import com.kueski.tmdb.data.remote.services.GetGenresService
+import com.kueski.tmdb.data.remote.services.GetPopularMoviesService
 import okhttp3.Interceptor
 import org.koin.dsl.module
 
@@ -32,5 +33,8 @@ val networkModule = module {
 
     single {
         get<RetrofitClient>().createService(GetGenresService::class.java)
+    }
+    single {
+        get<RetrofitClient>().createService(GetPopularMoviesService::class.java)
     }
 }
