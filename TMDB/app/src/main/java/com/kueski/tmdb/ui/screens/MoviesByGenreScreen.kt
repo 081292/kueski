@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.kueski.tmdb.common.ApiError
 import com.kueski.tmdb.domain.model.Movie
+import com.kueski.tmdb.ui.viewmodel.MovieUiState
 import com.kueski.tmdb.ui.viewmodel.MovieViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -43,40 +44,53 @@ fun MoviesByGenreScreen(
     navController: NavController,
     viewModel: MovieViewModel = koinViewModel<MovieViewModel>()
 ) {
-    val moviesByGenreFlow = viewModel.getMoviesByGenreFlow()
-    val moviesByGenre by moviesByGenreFlow.collectAsStateWithLifecycle(initialValue = emptyMap())
+
+    val moviesUiState by viewModel.moviesUiState.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
 
-    if (error != null || moviesByGenre.isEmpty()) {
-        val errorMessage = when (error) {
-            ApiError.NetworkError -> "Network Error. Verify your connection."
-            ApiError.UnknownError -> "Unknown Error."
-            else -> "Unexpected Error."
-        }
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = errorMessage)
-                Spacer(modifier = Modifier.height(8.dp))
-                LinearProgressIndicator()
-                Spacer(modifier = Modifier.height(16.dp))
-                TextButton(onClick = {
-                    viewModel.clearError()
-                    viewModel.fetchGenres()
-                    viewModel.fetchMovies()
-                }) {
-                    Text(text = "Refresh")
+    when (error) {
+        ApiError.NetworkError -> ErrorScreen { viewModel.refreshMovies() }
+        ApiError.UnknownError -> ErrorScreen { viewModel.refreshMovies() }
+        null -> {
+            when (val uiState = moviesUiState) {
+                is MovieUiState.Loading -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            LinearProgressIndicator()
+                        }
+                    }
+                }
+                is MovieUiState.Success -> {
+                    val moviesByGenre = uiState.movies
+                    if (moviesByGenre.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            moviesByGenre.forEach { (genre, movies) ->
+                                if (movies.isNotEmpty()) {
+                                    item {
+                                        GenreSection(genre = genre, movies = movies, navController)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-    } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            moviesByGenre.forEach { (genre, movies) ->
-                item {
-                    GenreSection(genre = genre, movies = movies, navController)
-                }
+    }
+}
+
+@Composable
+fun ErrorScreen(onClick: () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            LinearProgressIndicator()
+
+            Spacer(modifier = Modifier.height(16.dp))
+            TextButton(onClick = { onClick() }) {
+                Text(text = "Refresh")
             }
         }
     }

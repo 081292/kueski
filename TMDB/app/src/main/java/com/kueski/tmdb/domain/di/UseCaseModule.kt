@@ -16,6 +16,6 @@ val useCaseModule = module {
     single { FetchGenresUseCase(get()) }
     single { FetchMoviesUseCase(get()) }
     single { FetchMovieDetailsUseCase(get()) }
-    single { RefreshMoviesUseCase(get()) }
-    single { RefreshGenresUseCase(get()) }
+    single { RefreshMoviesUseCase(get(), get()) }
+    single { RefreshGenresUseCase(get(), get()) }
 }
